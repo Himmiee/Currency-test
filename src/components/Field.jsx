@@ -71,11 +71,13 @@ export const FieldComponent = () => {
           <select
             name="country"
             id="country"
-            className="outline-none w-64 sm:w-full"
+            className="outline-none w-64 sm:w-full bg-white text-gray-700"
             value={selectedCountryCode}
             onChange={handleCountryChange}
           >
-            <option value="">Select a country</option>
+            <option value="" className="text-gray-500">
+              Select a country
+            </option>{" "}
             {countryName?.map((country, index) => (
               <option key={index} value={country.cca2}>
                 {country.name.common}
