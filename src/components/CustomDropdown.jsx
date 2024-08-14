@@ -24,7 +24,7 @@ export const CustomDropdown = ({
   return (
     <div className="w-[275px] sm:w-96 relative">
       <div
-        className="p-2 mb-4 rounded-md border-gray-600 px-3 border-[1px]"
+        className="p-2 mb-4 rounded-lg border-gray-600 px-5 border-[1px]"
         onClick={() => setOpen(!open)}
       >
         <div className="flex justify-between items-center text-[15px]">
@@ -33,7 +33,7 @@ export const CustomDropdown = ({
         </div>
       </div>
       {open && (
-        <div className="absolute w-full border-[1px] border-gray-600 rounded-md p-2 flex flex-col bg-white max-h-40 overflow-auto">
+        <div className="absolute w-full border-[1px] border-gray-600 rounded-lg p-2 flex flex-col bg-white max-h-40 overflow-auto">
           {countries.map((country) => (
             <div
               key={country.cca2}
