@@ -1,4 +1,5 @@
 import axios from "axios";
+import { CustomDropdown } from "./CustomDropdown";
 import { useState, useEffect } from "react";
 
 export const FieldComponent = () => {
@@ -14,10 +15,7 @@ export const FieldComponent = () => {
       const response = await axios.get(baseUrl);
       if (response.status === 200) {
         const countries = response.data;
-
-        // Sort countries alphabetically
         countries.sort((a, b) => (a.name.common > b.name.common ? 1 : -1));
-
         setCountryName(countries);
       } else {
         setCountryName([]);
@@ -42,12 +40,10 @@ export const FieldComponent = () => {
   };
 
   // Handle symbol selection based on country
-  const handleCountryChange = (event) => {
-    const selectedCountryCode = event.target.value;
-    setSelectedCountryCode(selectedCountryCode);
-
+  const handleCountryChange = (countryCode) => {
+    setSelectedCountryCode(countryCode);
     const selectedCountry = countryName.find(
-      (country) => country.cca2 === selectedCountryCode
+      (country) => country.cca2 === countryCode
     );
 
     const symbol = selectedCountry?.currencies
@@ -64,27 +60,14 @@ export const FieldComponent = () => {
   return (
     <div className="bg-white rounded-2xl h-[450px] sm:w-[700px] w-96">
       <div className="flex flex-col justify-center items-center p-6">
-        <h1 className="m-3 text-xl font-bold">
+        <h1 className="my-6 text-xl font-bold">
           Currency <span className="text-green-600 italic">Converter</span>
         </h1>
-        <div className="border-gray-600 border-[1px] p-2 sm:w-96 rounded-lg my-5 text-gray-700">
-          <select
-            name="country"
-            id="country"
-            className="outline-none w-64 sm:w-full bg-white text-gray-700"
-            value={selectedCountryCode}
-            onChange={handleCountryChange}
-          >
-            <option value="" className="text-gray-500">
-              Select a country
-            </option>{" "}
-            {countryName?.map((country, index) => (
-              <option key={index} value={country.cca2}>
-                {country.name.common}
-              </option>
-            ))}
-          </select>
-        </div>
+        <CustomDropdown
+          countries={countryName}
+          onSelect={handleCountryChange}
+          selectedCountryCode={selectedCountryCode}
+        />
         <div className="flex items-center gap-4 border-[1px] w-[275px] sm:w-96 rounded-lg border-gray-600 px-2 text-gray-700">
           <div className="border-r-[1px] w-1/5 border-gray-600 flex justify-center">
             {currencySymbol}
